@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 from app.core.db_pool import connection_pool
 from app.api.health import router as health_router
-from app.api.form98_retrieve import router as form98_retrieve_router
-from app.api.form98_insert import router as form98_insert_router
-from app.api.form98_retrieve_by_key import router as form98_retrieve_by_key_router
-from app.api.form98_delete import router as form98_delete_router
-from app.api.form98_update import router as form98_update_router
+from app.api.form98.form98_retrieve import router as form98_retrieve_router
+from app.api.form98.form98_insert import router as form98_insert_router
+from app.api.form98.form98_retrieve_by_key import router as form98_retrieve_by_key_router
+from app.api.form98.form98_delete import router as form98_delete_router
+from app.api.form98.form98_update import router as form98_update_router
 
 
 app = FastAPI(title="CSA Store API")

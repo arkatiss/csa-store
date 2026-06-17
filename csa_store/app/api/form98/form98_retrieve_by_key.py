@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from app.core.db_utils import DBConnection
 
-from app.schemas.form98_retrieve_request import (
+from app.schemas.form98.form98_retrieve_request import (
     Form98RetrieveByKeyRequest
 )
 

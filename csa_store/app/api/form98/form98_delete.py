@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from fastapi import APIRouter
 
-from app.schemas.form98_delete_request import (
+from app.schemas.form98.form98_delete_request import (
     Form98DeleteRequest
 )
 

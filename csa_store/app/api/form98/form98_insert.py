@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from datetime import datetime, timedelta
 
-from app.schemas.form98_request import Form98InsertRequest
+from app.schemas.form98.form98_request import Form98InsertRequest
 from app.core.db_utils import DBConnection
 
 from app.utils.form98_helper import (
