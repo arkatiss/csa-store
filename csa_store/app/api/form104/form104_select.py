@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.get("/{store}/{form_type}")
+@router.get("/select/{store}/{form_type}")
 def form104_select(
         store: int,
         form_type: int):
