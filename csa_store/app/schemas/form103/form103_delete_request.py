@@ -1,0 +1,21 @@
+from datetime import date
+from uuid import UUID
+
+from pydantic import BaseModel
+
+
+class Form103DeleteRequest(BaseModel):
+
+    tenant_id: UUID
+
+    def_id: int
+
+    def_store: int
+
+    def_date: date
+
+    def_form_type: int
+
+    def_department: int
+
+    def_user: str
