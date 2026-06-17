@@ -375,3 +375,50 @@ def insert_audit(
         request.cb_user,
         comment
     ))
+
+
+def insert_delete_audit(
+        cur,
+        tenant_id,
+        request):
+
+    comment = (
+        f"Employee ID - "
+        f"{request.cb_employee_id} "
+        f"Till - "
+        f"{request.cb_till}"
+    )
+
+    cur.execute("""
+        INSERT INTO retail_history.audit
+        (
+            tenant_id,
+            a_store,
+            a_date,
+            a_form_type,
+            a_action,
+            a_creation_date,
+            a_user,
+            a_comment
+        )
+        VALUES
+        (
+            %s,
+            %s,
+            %s,
+            8,
+            'D',
+            CURRENT_TIMESTAMP,
+            %s,
+            %s
+        )
+    """,
+    (
+        tenant_id,
+        request.cb_store,
+        request.cb_date,
+        request.cb_user,
+        comment
+    ))
+
+

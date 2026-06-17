@@ -4,6 +4,8 @@ from app.api.health import router as health_router
 from app.api.form98_retrieve import router as form98_retrieve_router
 from app.api.form98_insert import router as form98_insert_router
 from app.api.form98_retrieve_by_key import router as form98_retrieve_by_key_router
+from app.api.form98_delete import router as form98_delete_router
+
 
 app = FastAPI(title="CSA Store API")
 
@@ -42,4 +44,5 @@ def root():
 app.include_router(form98_retrieve_router)
 app.include_router(form98_insert_router)
 app.include_router(form98_retrieve_by_key_router)
+app.include_router(form98_delete_router)
 
