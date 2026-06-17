@@ -422,3 +422,43 @@ def insert_delete_audit(
     ))
 
 
+
+def insert_update_audit(
+        cur,
+        tenant_id,
+        store,
+        cb_date,
+        cb_user,
+        comment):
+
+    cur.execute("""
+        INSERT INTO retail_history.audit
+        (
+            tenant_id,
+            a_store,
+            a_date,
+            a_form_type,
+            a_action,
+            a_creation_date,
+            a_user,
+            a_comment
+        )
+        VALUES
+        (
+            %s,
+            %s,
+            %s,
+            8,
+            'U',
+            CURRENT_TIMESTAMP,
+            %s,
+            %s
+        )
+    """,
+    (
+        tenant_id,
+        store,
+        cb_date,
+        cb_user,
+        comment
+    ))
