@@ -4,7 +4,6 @@ from datetime import date
 
 
 class Form98InsertRequest(BaseModel):
-
     cb_store: int
     cb_date: date
     cb_employee_id: str
