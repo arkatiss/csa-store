@@ -94,3 +94,49 @@ def insert_form105b_audit(
         user,
         comment
     ))
+
+
+def insert_form105b_update_audit(
+        cur,
+        tenant_id,
+        store,
+        date_value,
+        form_type,
+        user,
+        comment):
+    """
+    Insert Form105B Update Audit
+    """
+
+    cur.execute("""
+        INSERT INTO retail_history.audit
+        (
+            tenant_id,
+            a_store,
+            a_date,
+            a_form_type,
+            a_action,
+            a_creation_date,
+            a_user,
+            a_comment
+        )
+        VALUES
+        (
+            %s,
+            %s,
+            %s,
+            %s,
+            'U',
+            CURRENT_TIMESTAMP,
+            %s,
+            %s
+        )
+    """,
+    (
+        str(tenant_id),
+        store,
+        date_value,
+        form_type,
+        user,
+        comment
+    ))
