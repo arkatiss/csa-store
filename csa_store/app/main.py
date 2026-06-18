@@ -31,6 +31,7 @@ from app.api.form105b.form105b_select import router as form105b_select_router
 from app.api.form105b.form105b_retrieve_by_id import router as form105b_retrieve_router
 from app.api.form105b.form105b_insert import router as form105b_insert_router
 from app.api.form105b.form105b_update import router as form105b_update_router
+from app.api.form105b.form105b_delete import router as form105b_delete_router
 
 
 
@@ -99,3 +100,4 @@ app.include_router(form105b_select_router)
 app.include_router(form105b_retrieve_router)
 app.include_router(form105b_insert_router)
 app.include_router(form105b_update_router)
+app.include_router(form105b_delete_router)
