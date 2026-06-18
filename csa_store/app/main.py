@@ -28,6 +28,7 @@ from app.api.form105a.form105a_update import router as form105a_update_router
 from app.api.form105a.form105a_delete import router as form105a_delete_router
 
 from app.api.form105b.form105b_select import router as form105b_select_router
+from app.api.form105b.form105b_retrieve_by_id import router as form105b_retrieve_router
 
 
 
@@ -93,3 +94,4 @@ app.include_router(form105a_update_router)
 app.include_router(form105a_delete_router)
 
 app.include_router(form105b_select_router)
+app.include_router(form105b_retrieve_router)
