@@ -170,3 +170,55 @@ def insert_form105a_update_audit(
         user,
         comment
     ))
+
+
+def insert_form105a_delete_audit(
+        cur,
+        tenant_id,
+        store,
+        date_value,
+        form_type,
+        user,
+        amount,
+        identity):
+    """
+    Insert Form105A Delete Audit
+    """
+
+    comment = (
+        f"Amount - {amount}, "
+        f"Identity - {identity}"
+    )
+
+    cur.execute("""
+        INSERT INTO retail_history.audit
+        (
+            tenant_id,
+            a_store,
+            a_date,
+            a_form_type,
+            a_action,
+            a_creation_date,
+            a_user,
+            a_comment
+        )
+        VALUES
+        (
+            %s,
+            %s,
+            %s,
+            %s,
+            'D',
+            CURRENT_TIMESTAMP,
+            %s,
+            %s
+        )
+    """,
+    (
+        str(tenant_id),
+        store,
+        date_value,
+        form_type,
+        user,
+        comment
+    ))
