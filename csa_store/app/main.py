@@ -40,6 +40,9 @@ from app.api.form122.form122_update import router as form122_update_router
 from app.api.form112.form112_select import router as form112_select_router
 from app.api.form112.form112_update import router as form112_update_router
 
+from app.api.form97.form97_select import router as form97_select_router
+from app.api.form97.form97_update import router as form97_update_router
+
 
 
 
@@ -117,3 +120,6 @@ app.include_router(form122_update_router)
 
 app.include_router(form112_select_router)
 app.include_router(form112_update_router)
+
+app.include_router(form97_select_router)
+app.include_router(form97_update_router)
