@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.get("/ar-payment-types")
+@router.get("/form105a-ar-payment-types")
 def ar_payment_types_select():
     """
     Equivalent of:
