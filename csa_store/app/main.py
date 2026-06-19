@@ -46,9 +46,9 @@ from app.api.form97.form97_update import router as form97_update_router
 from app.api.form111.form111_select import router as form111_select_router
 from app.api.form111.form111_retrieve_by_id import router as form111_retrieve_by_id_router
 from app.api.form111.form111_account_descriptions_select import router as form111_account_descriptions_router
-# from app.api.form111.form111_insert import router as form111_insert_router
-# from app.api.form111.form111_update import router as form111_update_router
-# from app.api.form111.form111_delete import router as form111_delete_router
+from app.api.form111.form111_insert import router as form111_insert_router
+from app.api.form111.form111_update import router as form111_update_router
+from app.api.form111.form111_delete import router as form111_delete_router
 
 
 
@@ -134,6 +134,6 @@ app.include_router(form97_update_router)
 app.include_router(form111_select_router)
 app.include_router(form111_retrieve_by_id_router)
 app.include_router(form111_account_descriptions_router)
-# app.include_router(form111_insert_router)
-# app.include_router(form111_update_router)
-# app.include_router(form111_delete_router)
+app.include_router(form111_insert_router)
+app.include_router(form111_update_router)
+app.include_router(form111_delete_router)
