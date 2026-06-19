@@ -22,7 +22,7 @@ from app.api.form104.form104_delete import router as form104_delete_router
 
 from app.api.form105a.form105a_select import router as form105a_select_router
 from app.api.form105a.form105a_retrieve_by_id import router as form105a_retrieve_by_id_router
-from app.api.form105a.ar_payment_types_select import router as ar_payment_types_router
+from app.api.form105a.form105a_ar_payment_types_select import router as form105a_ar_payment_types_router
 from app.api.form105a.form105a_insert import router as form105a_insert_router
 from app.api.form105a.form105a_update import router as form105a_update_router
 from app.api.form105a.form105a_delete import router as form105a_delete_router
@@ -42,6 +42,13 @@ from app.api.form112.form112_update import router as form112_update_router
 
 from app.api.form97.form97_select import router as form97_select_router
 from app.api.form97.form97_update import router as form97_update_router
+
+from app.api.form111.form111_select import router as form111_select_router
+from app.api.form111.form111_retrieve_by_id import router as form111_retrieve_by_id_router
+# from app.api.form111.form111_ar_payment_types_select import router as form111_ar_payment_types_router
+# from app.api.form111.form111_insert import router as form111_insert_router
+# from app.api.form111.form111_update import router as form111_update_router
+# from app.api.form111.form111_delete import router as form111_delete_router
 
 
 
@@ -103,7 +110,7 @@ app.include_router(form104_delete_router)
 
 app.include_router(form105a_select_router)
 app.include_router(form105a_retrieve_by_id_router)
-app.include_router(ar_payment_types_router)
+app.include_router(form105a_ar_payment_types_router)
 app.include_router(form105a_insert_router)
 app.include_router(form105a_update_router)
 app.include_router(form105a_delete_router)
@@ -123,3 +130,10 @@ app.include_router(form112_update_router)
 
 app.include_router(form97_select_router)
 app.include_router(form97_update_router)
+
+app.include_router(form111_select_router)
+app.include_router(form111_retrieve_by_id_router)
+# app.include_router(form111_ar_payment_types_router)
+# app.include_router(form111_insert_router)
+# app.include_router(form111_update_router)
+# app.include_router(form111_delete_router)
