@@ -304,8 +304,3 @@ def form98_insert(
             "return_value": 1,
             "error_message": str(ex)
         }
-
-    finally:
-
-        if conn:
-            conn.close()
