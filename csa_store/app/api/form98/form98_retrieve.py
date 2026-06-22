@@ -47,7 +47,7 @@ def get_form98(cb_store: int):
                 CB_User,
                 CB_Promo_Coupons,
                 CB_Miscellaneous
-            FROM retail.cashier_balance
+            FROM retail_history.cashier_balance
             WHERE CB_Store = %s
             ORDER BY
                 CB_Date,
