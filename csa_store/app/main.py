@@ -8,6 +8,7 @@ from app.api.form98.form98_retrieve_by_key import router as form98_retrieve_by_k
 from app.api.form98.form98_delete import router as form98_delete_router
 from app.api.form98.form98_update import router as form98_update_router
 
+from app.api.form103.form103_select import router as form103_select_router
 from app.api.form103.form103_paidouts_departments_retrieve import router as form103_paidout_departments_retrieve_router
 from app.api.form103.form103_insert import router as form103_insert_router
 from app.api.form103.form103_update import router as form103_update_router
@@ -16,6 +17,7 @@ from app.api.form103.form103_delete import router as form103_delete_router
 
 from app.api.form104.form104_select import router as form104_select_router
 from app.api.form104.form104_retrieve_by_id import router as form104_retrieve_router
+from app.api.form104.form104_account_descriptions_select import router as form104_account_descriptions_router
 from app.api.form104.form104_insert import router as form104_insert_router
 from app.api.form104.form104_update import router as form104_update_router
 from app.api.form104.form104_delete import router as form104_delete_router
@@ -97,6 +99,7 @@ app.include_router(form98_retrieve_by_key_router)
 app.include_router(form98_delete_router)
 app.include_router(form98_update_router)
 
+app.include_router(form103_select_router)
 app.include_router(form103_paidout_departments_retrieve_router)
 app.include_router(form103_insert_router)
 app.include_router(form103_update_router)
@@ -104,6 +107,7 @@ app.include_router(form103_delete_router)
 
 app.include_router(form104_select_router)
 app.include_router(form104_retrieve_router)
+app.include_router(form104_account_descriptions_router)
 app.include_router(form104_insert_router)
 app.include_router(form104_update_router)
 app.include_router(form104_delete_router)
