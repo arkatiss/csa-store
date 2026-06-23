@@ -2,6 +2,9 @@ from fastapi import FastAPI
 from app.core.db_pool import connection_pool
 from app.api.health import router as health_router
 
+from app.api.stores_list import router as stores_list_router
+
+
 from app.api.form98.form98_retrieve import router as form98_retrieve_router
 from app.api.form98.form98_insert import router as form98_insert_router
 from app.api.form98.form98_retrieve_by_key import router as form98_retrieve_by_key_router
@@ -92,6 +95,7 @@ def shutdown():
 def root():
     return {"message": "CSA Store API is running"}
 
+app.include_router(stores_list_router)
 
 app.include_router(form98_retrieve_router)
 app.include_router(form98_insert_router)
