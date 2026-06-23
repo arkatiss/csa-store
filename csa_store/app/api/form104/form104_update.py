@@ -241,22 +241,22 @@ def form104_update(
                                     old_department,
                                 ))
 
-                old_dept = cur.fetchone()[0]
+                    old_dept = cur.fetchone()[0]
 
-                insert_form104_update_audit(
-                    cur,
-                    request.tenant_id,
-                    request.def_store,
-                    request.def_date,
-                    request.def_form_type,
-                    request.def_user,
-                    (
-                        f"Department Changed From: "
-                        f"{old_dept} "
-                        f"To: "
-                        f"{new_dept}"
+                    insert_form104_update_audit(
+                        cur,
+                        request.tenant_id,
+                        request.def_store,
+                        request.def_date,
+                        request.def_form_type,
+                        request.def_user,
+                        (
+                            f"Department Changed From: "
+                            f"{old_dept} "
+                            f"To: "
+                            f"{new_dept}"
+                        )
                     )
-                )
 
 
                 if old_user != request.def_user:
