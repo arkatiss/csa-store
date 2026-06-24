@@ -104,6 +104,7 @@ def form103_retrieve_by_id(
                     "return_value": 0,
                     "error_message": "",
                     "data": {
+                        "def_id": request.def_id,
                         "def_store": row[0],
                         "def_date": row[1],
                         "def_form_type": row[2],
