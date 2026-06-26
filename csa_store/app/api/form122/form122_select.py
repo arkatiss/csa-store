@@ -79,7 +79,8 @@ def form122_select(
                         psi_books_in_till,
                         psi_books_in_safe,
                         psi_books_in_office,
-                        psi_process_flag
+                        psi_process_flag,
+                        tenant_id
                     FROM retail_history.postage_stamp_inventory
                     WHERE psi_store=%s
                     ORDER BY psi_date ASC
@@ -105,7 +106,8 @@ def form122_select(
                         "psi_books_in_till": row[5],
                         "psi_books_in_safe": row[6],
                         "psi_books_in_office": row[7],
-                        "psi_process_flag": row[8]
+                        "psi_process_flag": row[8],
+                        "tenant_id": row[9]
                     })
 
                 return {
