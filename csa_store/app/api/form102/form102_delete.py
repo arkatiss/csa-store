@@ -15,7 +15,7 @@ router = APIRouter(
     tags=["Form102"]
 )
 
-@router.post("/delete")
+@router.delete("/delete")
 def csa_form102_delete(request: Form102DeleteRequest):
     """
     Equivalent of:
@@ -33,8 +33,8 @@ def csa_form102_delete(request: Form102DeleteRequest):
                 cur.execute("""
                     SELECT sc_eow_last_run, sc_eod_last_run
                     FROM retail_accounting.store_configuration
-                    WHERE tenant_id = %s AND sc_store = %s
-                """, (str(request.tenant_id), request.def_store))
+                    WHERE sc_store = %s
+                """, (request.def_store,))
                 
                 config_row = cur.fetchone()
                 if not config_row:
@@ -85,8 +85,8 @@ def csa_form102_delete(request: Form102DeleteRequest):
                 # 5. Delete Record
                 cur.execute("""
                     DELETE FROM retail_accounting.data_entry_forms
-                    WHERE tenant_id = %s AND def_id = %s
-                """, (str(request.tenant_id), request.def_id))
+                    WHERE def_id = %s
+                """, (request.def_id,))
 
                 # 6. Update DSCT
                 update_dsc_with_form102(
