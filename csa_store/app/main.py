@@ -59,6 +59,7 @@ from app.api.form102.form102_select import router as form102_select_router
 from app.api.form102.form102_retrieve_by_id import router as form102_retrieve_by_id_router
 from app.api.form102.form102_deposit_types_select import router as form102_deposit_types_select_router
 from app.api.form102.form102_insert import router as form102_insert_router
+from app.api.form102.form102_update import router as form102_update_router
 
 
 
@@ -153,3 +154,4 @@ app.include_router(form102_select_router)
 app.include_router(form102_retrieve_by_id_router)
 app.include_router(form102_deposit_types_select_router)
 app.include_router(form102_insert_router)
+app.include_router(form102_update_router)
