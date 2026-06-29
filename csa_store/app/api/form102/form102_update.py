@@ -16,7 +16,7 @@ router = APIRouter(
     tags=["Form102"]
 )
 
-@router.post("/update")
+@router.put("/update")
 def csa_form102_update(request: Form102UpdateRequest):
     """
     Equivalent of:
@@ -34,8 +34,8 @@ def csa_form102_update(request: Form102UpdateRequest):
                 cur.execute("""
                     SELECT sc_eow_last_run, sc_eod_last_run, sc_open_days
                     FROM retail_accounting.store_configuration
-                    WHERE tenant_id = %s AND sc_store = %s
-                """, (str(request.tenant_id), request.def_store))
+                    WHERE sc_store = %s
+                """, (request.def_store,))
                 
                 config_row = cur.fetchone()
                 if not config_row:
@@ -69,15 +69,23 @@ def csa_form102_update(request: Form102UpdateRequest):
 
                 # 4. Check Identity and old values
                 cur.execute("""
-                    SELECT def_store, def_date, def_form_type, def_user, 
-                           def_descriptor_1, def_descriptor_2, def_amount_2
+                    SELECT count(*)
                     FROM retail_accounting.data_entry_forms
-                    WHERE tenant_id = %s AND def_id = %s
-                """, (str(request.tenant_id), request.def_id))
+                    WHERE def_id = %s
+                """, (request.def_id,))
                 
-                old_record = cur.fetchone()
-                if not old_record:
+                count_record = cur.fetchone()
+                if not count_record:
                     return {"return_value": 1, "error_message": "Identity Not Found"}
+
+                cur.execute("""
+                                    SELECT def_store, def_date, def_form_type, def_user, 
+                           def_descriptor_1, def_descriptor_2, def_amount_2
+                                    FROM retail_accounting.data_entry_forms
+                                    WHERE def_id = %s
+                                """, (request.def_id,))
+
+                old_record = cur.fetchone()
                 
                 old_store = old_record[0]
                 old_date = old_record[1].date() if old_record[1] else None
@@ -100,11 +108,10 @@ def csa_form102_update(request: Form102UpdateRequest):
                         def_descriptor_1 = %s,
                         def_descriptor_2 = %s,
                         def_amount_2 = %s
-                    WHERE tenant_id = %s AND def_id = %s
+                    WHERE def_id = %s
                 """, (
                     request.def_date, request.def_user, request.def_descriptor_1, 
-                    request.def_descriptor_2, request.def_amount_2,
-                    str(request.tenant_id), request.def_id
+                    request.def_descriptor_2, request.def_amount_2, request.def_id
                 ))
 
                 # 6. Update DSCT
