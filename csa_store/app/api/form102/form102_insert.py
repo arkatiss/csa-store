@@ -2,7 +2,7 @@ import logging
 from fastapi import APIRouter
 from app.core.db_utils import DBConnection
 from app.schemas.form102.form102_insert_schema import Form102InsertRequest
-from app.api.form102.form102_helper import (
+from app.utils.form102_helper import (
     get_week_ending_date,
     is_valid_date,
     is_store_open,
