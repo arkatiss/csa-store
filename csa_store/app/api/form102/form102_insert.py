@@ -35,11 +35,17 @@ def csa_form102_insert(request: Form102InsertRequest):
             with conn.cursor() as cur:
                 # 1. Fetch Store Configuration
                 cur.execute("""
-                    SELECT sc_eow_last_run, sc_eod_last_run, sc_open_days
+                    SELECT
+                        sc_eow_last_run,
+                        sc_eod_last_run,
+                        sc_open_days
                     FROM retail_accounting.store_configuration
-                    WHERE tenant_id = %s AND sc_store = %s
-                """, (str(request.tenant_id), request.def_store))
-                
+                    WHERE sc_store = %s
+                """,
+                            (
+                                request.def_store,
+                            ))
+
                 config_row = cur.fetchone()
                 if not config_row:
                     return {
