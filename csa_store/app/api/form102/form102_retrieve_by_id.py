@@ -34,7 +34,7 @@ def form102_retrieve_by_id(request: Form102RetrieveByIDRequest):
                     WHERE def_id=%s
                 """,
                 (
-                    request.def_id
+                    request.def_id,
                 ))
 
                 count = cur.fetchone()[0]
@@ -63,7 +63,7 @@ def form102_retrieve_by_id(request: Form102RetrieveByIDRequest):
                     WHERE def.def_id=%s
                 """,
                 (
-                    request.def_id
+                    request.def_id,
                 ))
 
                 row = cur.fetchone()
