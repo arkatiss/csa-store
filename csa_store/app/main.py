@@ -61,6 +61,7 @@ from app.api.form102.form102_deposit_types_select import router as form102_depos
 from app.api.form102.form102_insert import router as form102_insert_router
 from app.api.form102.form102_update import router as form102_update_router
 from app.api.form102.form102_delete import router as form102_delete_router
+from app.api.daily_department_input_ind_only.dept_input_select import router as dept_input_select_router
 
 
 
@@ -157,3 +158,4 @@ app.include_router(form102_deposit_types_select_router)
 app.include_router(form102_insert_router)
 app.include_router(form102_update_router)
 app.include_router(form102_delete_router)
+app.include_router(dept_input_select_router)
