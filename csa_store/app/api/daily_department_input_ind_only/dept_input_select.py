@@ -34,8 +34,8 @@ def csa_dept_input_select(request: DeptInputSelectRequest):
                 cur.execute("""
                     SELECT sc_eod_last_run
                     FROM retail_accounting.store_configuration
-                    WHERE tenant_id = %s AND sc_store = %s
-                """, (str(request.tenant_id), request.ddsm_store))
+                    WHERE sc_store = %s
+                """, (request.ddsm_store,))
                 
                 config_row = cur.fetchone()
                 
@@ -53,8 +53,7 @@ def csa_dept_input_select(request: DeptInputSelectRequest):
                             ddsm_other4 as other4,
                             ddsm_other5 as other5
                     FROM    retail.daily_dept_sales_manual
-                    WHERE   tenant_id = %s AND
-                            ddsm_store = %s AND
+                    WHERE   ddsm_store = %s AND
                             ddsm_file_date = %s
                     
                     UNION ALL
@@ -66,8 +65,7 @@ def csa_dept_input_select(request: DeptInputSelectRequest):
                             ddvrm_other4 as other4,
                             ddvrm_other5 as other5
                     FROM    retail.daily_dept_voids_refunds_manual
-                    WHERE   tenant_id = %s AND
-                            ddvrm_store = %s AND
+                    WHERE   ddvrm_store = %s AND
                             ddvrm_file_date = %s
                             
                     UNION ALL
@@ -79,13 +77,12 @@ def csa_dept_input_select(request: DeptInputSelectRequest):
                             dccm_other4 as other4,
                             dccm_other5 as other5
                     FROM    retail.daily_customer_count_manual
-                    WHERE   tenant_id = %s AND
-                            dccm_store = %s AND
+                    WHERE   dccm_store = %s AND
                             dccm_file_date = %s
                 """, (
-                    str(request.tenant_id), request.ddsm_store, request.ddsm_file_date,
-                    str(request.tenant_id), request.ddsm_store, request.ddsm_file_date,
-                    str(request.tenant_id), request.ddsm_store, request.ddsm_file_date
+                    request.ddsm_store, request.ddsm_file_date,
+                    request.ddsm_store, request.ddsm_file_date,
+                    request.ddsm_store, request.ddsm_file_date
                 ))
                 
                 rows = cur.fetchall()
