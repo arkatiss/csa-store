@@ -30,11 +30,9 @@ def csa_form106_insert(request: Form106InsertRequest):
                 cur.execute("""
                     SELECT sc_eow_last_run
                     FROM retail_accounting.store_configuration
-                    WHERE tenant_id = %s
-                      AND sc_store = %s
+                    WHERE sc_store = %s
                 """, (
-                    str(request.tenant_id),
-                    request.def_store
+                    request.def_store,
                 ))
 
                 row = cur.fetchone()

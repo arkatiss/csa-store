@@ -15,7 +15,7 @@ router = APIRouter(
 )
 
 
-@router.get("/retrievebyid")
+@router.post("/retrievebyid")
 def csa_form106_retrieve_by_id(request: Form106RetrieveByIDRequest):
 
     try:
@@ -35,12 +35,10 @@ def csa_form106_retrieve_by_id(request: Form106RetrieveByIDRequest):
                 cur.execute("""
                     SELECT COUNT(*)
                     FROM retail_accounting.data_entry_forms
-                    WHERE tenant_id=%s
-                    AND def_id=%s
+                    WHERE def_id=%s
                 """,
                 (
-                    str(request.tenant_id),
-                    request.def_id
+                    request.def_id,
                 ))
 
                 count = cur.fetchone()[0]
@@ -70,12 +68,10 @@ def csa_form106_retrieve_by_id(request: Form106RetrieveByIDRequest):
                         ON d.def_form_type = f.ft_id
                     INNER JOIN retail_accounting.departments dep
                         ON d.def_department = dep.d_id
-                    WHERE d.tenant_id=%s
-                    AND d.def_id=%s
+                    WHERE d.def_id=%s
                 """,
                 (
-                    str(request.tenant_id),
-                    request.def_id
+                    request.def_id,
                 ))
 
                 row = cur.fetchone()

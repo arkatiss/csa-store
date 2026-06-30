@@ -7,7 +7,7 @@ from app.core.db_utils import DBConnection
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/departments",
+    prefix="/form106/departments",
     tags=["Departments"]
 )
 

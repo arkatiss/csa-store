@@ -79,12 +79,10 @@ def csa_form106_delete(request: Form106DeleteRequest):
                 cur.execute("""
                     SELECT sc_eow_last_run
                     FROM retail_accounting.store_configuration
-                    WHERE tenant_id=%s
-                    AND sc_store=%s
+                    WHERE sc_store=%s
                 """,
                 (
-                    str(request.tenant_id),
-                    request.def_store
+                    request.def_store,
                 ))
 
                 row = cur.fetchone()
@@ -117,12 +115,10 @@ def csa_form106_delete(request: Form106DeleteRequest):
                         def_department,
                         def_amount_2
                     FROM retail_accounting.data_entry_forms
-                    WHERE tenant_id=%s
-                    AND def_id=%s
+                    WHERE def_id=%s
                 """,
                 (
-                    str(request.tenant_id),
-                    request.def_id
+                    request.def_id,
                 ))
 
                 existing = cur.fetchone()
@@ -184,12 +180,10 @@ def csa_form106_delete(request: Form106DeleteRequest):
                 cur.execute("""
                     DELETE
                     FROM retail_accounting.data_entry_forms
-                    WHERE tenant_id=%s
-                    AND def_id=%s
+                    WHERE def_id=%s
                 """,
                 (
-                    str(request.tenant_id),
-                    request.def_id
+                    request.def_id,
                 ))
 
                 if cur.rowcount == 0:

@@ -96,12 +96,10 @@ def csa_form106_update(request: Form106UpdateRequest):
                     SELECT
                         sc_eow_last_run
                     FROM retail_accounting.store_configuration
-                    WHERE tenant_id=%s
-                    AND sc_store=%s
+                    WHERE sc_store=%s
                 """,
                 (
-                    str(request.tenant_id),
-                    request.def_store
+                    request.def_store,
                 ))
 
                 row = cur.fetchone()
@@ -132,12 +130,10 @@ def csa_form106_update(request: Form106UpdateRequest):
                 cur.execute("""
                     SELECT COUNT(*)
                     FROM retail_accounting.data_entry_forms
-                    WHERE tenant_id=%s
-                    AND def_id=%s
+                    WHERE def_id=%s
                 """,
                 (
-                    str(request.tenant_id),
-                    request.def_id
+                    request.def_id,
                 ))
 
                 count = cur.fetchone()[0]
@@ -231,8 +227,7 @@ def csa_form106_update(request: Form106UpdateRequest):
                         def_descriptor_1=%s,
                         def_descriptor_2=%s,
                         def_amount_2=%s
-                    WHERE tenant_id=%s
-                    AND def_id=%s
+                    WHERE def_id=%s
                 """,
                 (
                     request.def_date,
@@ -241,7 +236,6 @@ def csa_form106_update(request: Form106UpdateRequest):
                     request.def_descriptor_1,
                     request.def_descriptor_2,
                     request.def_amount_2,
-                    str(request.tenant_id),
                     request.def_id
                 ))
 

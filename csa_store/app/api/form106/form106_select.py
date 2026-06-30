@@ -3,6 +3,8 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
+from app.schemas.form106.form106_select_schema import Form106SelectRequest
+
 from app.core.db_utils import DBConnection
 
 logger = logging.getLogger(__name__)
@@ -13,22 +15,18 @@ router = APIRouter(
 )
 
 
-@router.get("/select")
-def csa_form106_select(
-    tenant_id: UUID,
-    def_store: int,
-    def_form_type: int
-):
+@router.post("/select")
+def csa_form106_select(request: Form106SelectRequest):
     try:
       
-        if def_store is None:
+        if request.def_store is None:
             return {
                 "return_value": 1,
                 "error_message": "Invalid Store"
             }
 
 
-        if def_form_type is None or def_form_type != 6:
+        if request.def_form_type is None or request.def_form_type != 6:
             return {
                 "return_value": 1,
                 "error_message": "Invalid Form Type"
@@ -50,14 +48,12 @@ def csa_form106_select(
                     FROM retail_accounting.data_entry_forms d
                     INNER JOIN retail_accounting.departments dept
                         ON d.def_department = dept.d_id
-                    WHERE d.tenant_id = %s
-                      AND d.def_store = %s
+                    WHERE d.def_store = %s
                       AND d.def_form_type = %s
                     ORDER BY d.def_id
                 """, (
-                    str(tenant_id),
-                    def_store,
-                    def_form_type
+                    request.def_store,
+                    request.def_form_type
                 ))
 
                 rows = cur.fetchall()
@@ -78,7 +74,7 @@ def csa_form106_select(
 
                 return {
                     "return_value": 0,
-                    "error_message": "form106 data retrieve data successfully.",
+                    "error_message": "",
                     "data": result
                 }
 
