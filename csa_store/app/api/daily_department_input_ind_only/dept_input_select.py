@@ -3,7 +3,11 @@ from fastapi import APIRouter, Query
 from datetime import date
 from uuid import UUID
 from app.core.db_utils import DBConnection
-from app.schemas.daily_department_input_ind_only.dept_input_select_schema import DeptInputSelectResponse, DeptInputRow
+from app.schemas.daily_department_input_ind_only.dept_input_select_schema import (
+    DeptInputSelectRequest, 
+    DeptInputSelectResponse, 
+    DeptInputRow
+)
 
 logger = logging.getLogger(__name__)
 
@@ -12,20 +16,16 @@ router = APIRouter(
     tags=["Daily Department Input Ind Only"]
 )
 
-@router.get("/select", response_model=DeptInputSelectResponse)
-def csa_dept_input_select(
-    tenant_id: UUID = Query(..., description="Tenant ID"),
-    ddsm_store: int = Query(..., description="Store Number"),
-    ddsm_file_date: date = Query(..., description="File Date")
-):
+@router.post("/select", response_model=DeptInputSelectResponse)
+def csa_dept_input_select(request: DeptInputSelectRequest):
     """
     Equivalent of:
     csa_DeptInput_Select
     """
     try:
-        if ddsm_store is None:
+        if request.ddsm_store is None:
             return DeptInputSelectResponse(return_value=1, error_message="Invalid Store")
-        if ddsm_file_date is None:
+        if request.ddsm_file_date is None:
             return DeptInputSelectResponse(return_value=1, error_message="Invalid Date")
 
         with DBConnection() as conn:
@@ -35,13 +35,13 @@ def csa_dept_input_select(
                     SELECT sc_eod_last_run
                     FROM retail_accounting.store_configuration
                     WHERE tenant_id = %s AND sc_store = %s
-                """, (str(tenant_id), ddsm_store))
+                """, (str(request.tenant_id), request.ddsm_store))
                 
                 config_row = cur.fetchone()
                 
                 sc_eod_last_run = config_row[0].date() if config_row and config_row[0] else None
                 
-                if sc_eod_last_run != ddsm_file_date:
+                if sc_eod_last_run != request.ddsm_file_date:
                     return DeptInputSelectResponse(return_value=1, error_message="Invalid Date")
 
                 # 2. Query Data (UNION ALL equivalent)
@@ -83,9 +83,9 @@ def csa_dept_input_select(
                             dccm_store = %s AND
                             dccm_file_date = %s
                 """, (
-                    str(tenant_id), ddsm_store, ddsm_file_date,
-                    str(tenant_id), ddsm_store, ddsm_file_date,
-                    str(tenant_id), ddsm_store, ddsm_file_date
+                    str(request.tenant_id), request.ddsm_store, request.ddsm_file_date,
+                    str(request.tenant_id), request.ddsm_store, request.ddsm_file_date,
+                    str(request.tenant_id), request.ddsm_store, request.ddsm_file_date
                 ))
                 
                 rows = cur.fetchall()
