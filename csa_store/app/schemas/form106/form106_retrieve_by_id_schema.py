@@ -1,0 +1,10 @@
+from uuid import UUID
+
+from pydantic import BaseModel
+
+
+class Form106RetrieveByIDRequest(BaseModel):
+
+    tenant_id: UUID
+
+    def_id: int

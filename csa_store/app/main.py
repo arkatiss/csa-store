@@ -61,10 +61,18 @@ from app.api.form102.form102_deposit_types_select import router as form102_depos
 from app.api.form102.form102_insert import router as form102_insert_router
 from app.api.form102.form102_update import router as form102_update_router
 from app.api.form102.form102_delete import router as form102_delete_router
+
 from app.api.daily_department_input_ind_only.dept_input_select import router as dept_input_select_router
 from app.api.daily_department_input_ind_only.dept_sales_manual_update import router as dept_sales_manual_update_router
 from app.api.daily_department_input_ind_only.dept_voids_refunds_manual_update import router as dept_voids_refunds_manual_update_router
 from app.api.daily_department_input_ind_only.dept_customer_count_manual_update import router as dept_customer_count_manual_update_router
+
+from app.api.form106.form106_select import router as form106_select_router
+from app.api.form106.form106_retrieve_by_id import router as form106_retrieve_by_id_router
+from app.api.form106.form106_departments_select import router as departments_select_router
+from app.api.form106.form106_insert import router as form106_insert_router
+from app.api.form106.form106_update import router as form106_update_router
+from app.api.form106.form106_delete import router as form106_delete_router
 
 
 
@@ -161,7 +169,15 @@ app.include_router(form102_deposit_types_select_router)
 app.include_router(form102_insert_router)
 app.include_router(form102_update_router)
 app.include_router(form102_delete_router)
+
 app.include_router(dept_input_select_router)
 app.include_router(dept_sales_manual_update_router)
 app.include_router(dept_voids_refunds_manual_update_router)
 app.include_router(dept_customer_count_manual_update_router)
+
+app.include_router(form106_insert_router)
+app.include_router(form106_select_router)
+app.include_router(form106_delete_router)
+app.include_router(form106_update_router)
+app.include_router(form106_retrieve_by_id_router)
+app.include_router(departments_select_router)
