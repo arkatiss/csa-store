@@ -18,7 +18,7 @@ def get_form98():
 
     try:
         query = """
-            SELECT tenant_id, sc_store, sc_eow_last_run from retail_accounting.store_configuration"""
+            SELECT tenant_id, sc_store, sc_eod_last_run, sc_eow_last_run from retail_accounting.store_configuration"""
 
         with DBConnection() as conn:
             with conn.cursor() as cur:
