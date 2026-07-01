@@ -80,6 +80,7 @@ def csa_form106_retrieve_by_id(request: Form106RetrieveByIDRequest):
                     "return_value": 0,
                     "error_message": "",
                     "data": {
+                        "def_id": request.def_id,
                         "def_store": row[0],
                         "def_date": row[1],
                         "def_form_type": row[2],
