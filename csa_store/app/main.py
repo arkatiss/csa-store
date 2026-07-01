@@ -66,6 +66,7 @@ from app.api.daily_department_input_ind_only.dept_input_select import router as 
 from app.api.daily_department_input_ind_only.dept_sales_manual_update import router as dept_sales_manual_update_router
 from app.api.daily_department_input_ind_only.dept_voids_refunds_manual_update import router as dept_voids_refunds_manual_update_router
 from app.api.daily_department_input_ind_only.dept_customer_count_manual_update import router as dept_customer_count_manual_update_router
+from app.api.daily_taxes_input_ind_only.daily_taxes_manual_select import router as daily_taxes_manual_select_router
 
 from app.api.form106.form106_select import router as form106_select_router
 from app.api.form106.form106_retrieve_by_id import router as form106_retrieve_by_id_router
@@ -174,10 +175,10 @@ app.include_router(dept_input_select_router)
 app.include_router(dept_sales_manual_update_router)
 app.include_router(dept_voids_refunds_manual_update_router)
 app.include_router(dept_customer_count_manual_update_router)
-
 app.include_router(form106_insert_router)
 app.include_router(form106_select_router)
 app.include_router(form106_delete_router)
 app.include_router(form106_update_router)
 app.include_router(form106_retrieve_by_id_router)
 app.include_router(departments_select_router)
+app.include_router(daily_taxes_manual_select_router)
