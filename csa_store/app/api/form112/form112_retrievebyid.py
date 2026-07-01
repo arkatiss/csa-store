@@ -4,6 +4,7 @@ from fastapi import APIRouter
 
 from app.core.db_utils import DBConnection
 
+
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
@@ -12,9 +13,8 @@ router = APIRouter(
 )
 
 
-@router.get("/select/{dms_store}")
-def form112_select(
-        dms_store: int):
+@router.get("/retrievebyid/{dms_store}/{dms_machine_nbr}")
+def form112_select(dms_store: int, dms_machine_nbr: int):
     """
     Equivalent of:
 
@@ -32,6 +32,13 @@ def form112_select(
             return {
                 "return_value": 1,
                 "error_message": "Invalid Store"
+            }
+
+        if dms_machine_nbr is None:
+
+            return {
+                "return_value": 1,
+                "error_message": "Invalid Machine Number"
             }
 
         with DBConnection() as conn:
@@ -103,11 +110,11 @@ def form112_select(
                         ON dm.dm_type = dmt.dmt_id
                     INNER JOIN retail_accounting.drink_machine_count_types dmct
                         ON dm.dm_count_type = dmct.dmct_type
-                    WHERE dms.dms_store=%s
+                    WHERE dms.dms_store=%s AND dms.dms_machine_nbr=%s
                     ORDER BY dms.dms_date
                 """,
                 (
-                    dms_store,
+                    dms_store, dms_machine_nbr
                 ))
 
                 rows = cur.fetchall()
