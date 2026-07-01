@@ -75,6 +75,7 @@ from app.api.form106.form106_update import router as form106_update_router
 from app.api.form106.form106_delete import router as form106_delete_router
 
 from app.api.daily_taxes_input_ind_only.daily_taxes_manual_select import router as daily_taxes_manual_select_router
+from app.api.daily_taxes_input_ind_only.daily_taxes_manual_update import router as daily_taxes_manual_update_router
 
 
 
@@ -185,3 +186,4 @@ app.include_router(form106_retrieve_by_id_router)
 app.include_router(departments_select_router)
 
 app.include_router(daily_taxes_manual_select_router)
+app.include_router(daily_taxes_manual_update_router)
