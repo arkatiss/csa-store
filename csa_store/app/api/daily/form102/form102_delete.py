@@ -11,7 +11,7 @@ from app.utils.daily.form102_helper import (
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/form102",
+    prefix="/daily/form102",
     tags=["Form102"]
 )
 

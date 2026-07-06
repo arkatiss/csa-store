@@ -7,7 +7,7 @@ from app.schemas.daily.form98.form98_retrieve_request import (
 )
 
 router = APIRouter(
-    prefix="/form98",
+    prefix="/daily/form98",
     tags=["Form98"]
 )
 

@@ -7,7 +7,7 @@ from app.utils.daily.form102_helper import get_week_ending_date
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/daily_department_input_ind_only/customer_count_manual",
+    prefix="/daily/daily_department_input_ind_only/customer_count_manual",
     tags=["Daily Department Input Ind Only"]
 )
 

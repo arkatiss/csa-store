@@ -12,7 +12,7 @@ from app.schemas.daily.daily_department_input_ind_only.dept_input_select_schema 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/daily_department_input_ind_only",
+    prefix="/daily/daily_department_input_ind_only",
     tags=["Daily Department Input Ind Only"]
 )
 

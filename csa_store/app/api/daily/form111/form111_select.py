@@ -11,7 +11,7 @@ from app.schemas.daily.form111.form111_select_schema import (
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/form111",
+    prefix="/daily/form111",
     tags=["Form111"]
 )
 

@@ -9,7 +9,7 @@ from app.core.db_utils import DBConnection
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/form122",
+    prefix="/daily/form122",
     tags=["Form122"]
 )
 

@@ -8,7 +8,7 @@ from app.utils.daily.form106_helper import get_week_ending_date, is_valid_date
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/form106", tags=["Form106"])
+router = APIRouter(prefix="/daily/form106", tags=["Form106"])
 
 
 @router.post("/insert")

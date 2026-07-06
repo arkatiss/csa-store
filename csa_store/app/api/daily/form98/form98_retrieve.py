@@ -3,7 +3,7 @@ from app.core.db_utils import DBConnection
 import logging
 
 router = APIRouter(
-    prefix="/form98",
+    prefix="/daily/form98",
     tags=["Form98"]
 )
 

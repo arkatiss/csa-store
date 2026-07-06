@@ -10,7 +10,7 @@ from app.schemas.daily.form106.form106_retrieve_by_id_schema import (
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/form106",
+    prefix="/daily/form106",
     tags=["Form106"]
 )
 

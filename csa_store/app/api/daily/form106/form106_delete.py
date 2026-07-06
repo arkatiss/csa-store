@@ -13,7 +13,7 @@ from app.utils.daily.form106_helper import (
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/form106",
+    prefix="/daily/form106",
     tags=["Form106"]
 )
 

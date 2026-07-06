@@ -21,7 +21,7 @@ from app.utils.daily.form103_helper import (
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/form103",
+    prefix="/daily/form103",
     tags=["Form103"]
 )
 

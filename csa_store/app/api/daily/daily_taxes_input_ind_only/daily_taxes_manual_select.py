@@ -6,7 +6,7 @@ from app.schemas.daily.daily_taxes_input_ind_only.daily_taxes_manual_select_sche
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/daily_taxes_input_ind_only",
+    prefix="/daily/daily_taxes_input_ind_only",
     tags=["Daily Taxes Input Ind Only"]
 )
 

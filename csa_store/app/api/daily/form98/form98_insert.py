@@ -15,7 +15,7 @@ from app.utils.daily.form98_helper import (
 )
 
 router = APIRouter(
-    prefix="/form98",
+    prefix="/daily/form98",
     tags=["Form98"]
 )
 

@@ -11,7 +11,7 @@ from app.schemas.daily.form103.form103_retrieve_by_id_schema import (
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/form103",
+    prefix="/daily/form103",
     tags=["Form103"]
 )
 

@@ -22,7 +22,7 @@ from app.utils.daily.form111_helper import (
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/form111",
+    prefix="/daily/form111",
     tags=["Form111"]
 )
 

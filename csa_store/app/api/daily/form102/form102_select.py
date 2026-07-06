@@ -6,7 +6,7 @@ from app.schemas.daily.form102.form102_select_schema import Form102SelectRequest
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/form102",
+    prefix="/daily/form102",
     tags=["Form102"]
 )
 
