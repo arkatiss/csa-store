@@ -78,6 +78,8 @@ from app.api.daily.form106.form106_delete import router as form106_delete_router
 from app.api.daily.daily_taxes_input_ind_only.daily_taxes_manual_select import router as daily_taxes_manual_select_router
 from app.api.daily.daily_taxes_input_ind_only.daily_taxes_manual_update import router as daily_taxes_manual_update_router
 
+from app.api.week_to_date.form97_wtd_net_receipts.wtd_net_receipts_update import router as wtd_net_receipts_update_router
+
 
 
 
@@ -189,3 +191,5 @@ app.include_router(departments_select_router)
 
 app.include_router(daily_taxes_manual_select_router)
 app.include_router(daily_taxes_manual_update_router)
+
+app.include_router(wtd_net_receipts_update_router)
