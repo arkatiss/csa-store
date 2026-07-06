@@ -94,13 +94,13 @@ def csa_wtd_net_receipts_update(request: WTDNetReceiptsUpdateRequest):
                 audit_records = []
                 if old_mo_receipts != request.wnr_mo_receipts:
                     audit_records.append((
-                        request.tenant_id, request.wnr_store, request.wnr_week_ending_date, 12, 'U', request.user, 
+                        str(request.tenant_id), request.wnr_store, request.wnr_week_ending_date, 12, 'U', request.user,
                         f"MO Receipts Changed From - {old_mo_receipts} To - {request.wnr_mo_receipts}"
                     ))
                     
                 if old_nbr_of_mo != request.wnr_nbr_of_mo:
                     audit_records.append((
-                        request.tenant_id, request.wnr_store, request.wnr_week_ending_date, 12, 'U', request.user, 
+                        str(request.tenant_id), request.wnr_store, request.wnr_week_ending_date, 12, 'U', request.user,
                         f"Nbr Of MOs Changed From - {old_nbr_of_mo} To - {request.wnr_nbr_of_mo}"
                     ))
 
