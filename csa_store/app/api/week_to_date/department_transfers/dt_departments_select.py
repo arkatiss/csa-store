@@ -6,7 +6,7 @@ from app.schemas.week_to_date.department_transfers.dt_departments_select_schema 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/week_to_date/department_transfers",
+    prefix="/week_to_date/departments_transfers",
     tags=["Week To Date Department Transfers"]
 )
 
