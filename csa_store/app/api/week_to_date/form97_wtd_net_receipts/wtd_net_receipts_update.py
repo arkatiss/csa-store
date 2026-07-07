@@ -2,7 +2,7 @@ import logging
 from fastapi import APIRouter
 from app.core.db_utils import DBConnection
 from app.schemas.week_to_date.form97_wtd_net_receipts.wtd_net_receipts_update_schema import WTDNetReceiptsUpdateRequest, WTDNetReceiptsUpdateResponse
-from app.utils.week_to_date.form97_wtd_net_receipts.form97_wtd_net_receipts_helper import update_dsc_with_form111, update_form111_with_mo_fees, update_form111_with_mo_receipts
+from app.utils.week_to_date.form97_wtd_net_receipts_helper import update_dsc_with_form111, update_form111_with_mo_fees, update_form111_with_mo_receipts
 
 logger = logging.getLogger(__name__)
 
