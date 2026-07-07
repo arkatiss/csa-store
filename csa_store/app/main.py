@@ -87,6 +87,7 @@ from app.api.week_to_date.department_transfers.department_transfers_update impor
 from app.api.week_to_date.department_transfers.department_transfers_delete import router as department_transfers_delete
 
 from app.api.week_to_date.employee_pharmacy_update.employee_rx_sales_select import router as employee_rx_sales_select_router
+from app.api.week_to_date.employee_pharmact_update.employee_rx_sales_update import router as employee_rx_sales_update_router
 
 
 
@@ -210,3 +211,4 @@ app.include_router(department_transfers_update)
 app.include_router(department_transfers_delete)
 
 app.include_router(employee_rx_sales_select_router)
+app.include_router(employee_rx_sales_update_router)
