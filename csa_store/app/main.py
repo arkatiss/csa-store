@@ -82,6 +82,7 @@ from app.api.week_to_date.form97_wtd_net_receipts.wtd_net_receipts_update import
 from app.api.week_to_date.form97_wtd_net_receipts.wtd_net_receipts_select import router as wtd_net_receipts_select_router
 
 from app.api.week_to_date.department_transfers.department_transfers_select import router as department_transfers_select
+from app.api.week_to_date.department_transfers.dt_departments_select import router as dt_departments_select_router
 from app.api.week_to_date.department_transfers.department_transfers_retrievebyid import router as department_transfers_retrievebyid
 from app.api.week_to_date.department_transfers.department_transfers_insert import router as department_transfers_insert
 from app.api.week_to_date.department_transfers.department_transfers_update import router as department_transfers_update
@@ -207,6 +208,7 @@ app.include_router(wtd_net_receipts_select_router)
 app.include_router(wtd_net_receipts_update_router)
 
 app.include_router(department_transfers_select)
+app.include_router(dt_departments_select_router)
 app.include_router(department_transfers_retrievebyid)
 app.include_router(department_transfers_insert)
 app.include_router(department_transfers_update)
