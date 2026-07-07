@@ -2,12 +2,12 @@ import logging
 from datetime import datetime
 from fastapi import APIRouter
 from app.core.db_utils import DBConnection
-from app.schemas.week_to_date.employee_pharmact_update.employee_rx_sales_update_schema import EmployeeRXSalesUpdateRequest, EmployeeRXSalesUpdateResponse
+from app.schemas.week_to_date.employee_pharmacy_update.employee_rx_sales_update_schema import EmployeeRXSalesUpdateRequest, EmployeeRXSalesUpdateResponse
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/week_to_date/employee_pharmact_update",
+    prefix="/week_to_date/employee_pharmacy_update",
     tags=["Week To Date Employee Pharmacy Update"]
 )
 
@@ -67,7 +67,7 @@ def csa_employee_rx_sales_update(request: EmployeeRXSalesUpdateRequest):
                     pass # OK to run
                 else:
                     return EmployeeRXSalesUpdateResponse(
-                        return_value=1, 
+                        return_value=1,
                         error_message="You can only run this option at the end of the week"
                     )
 
@@ -176,13 +176,13 @@ def csa_employee_rx_sales_update(request: EmployeeRXSalesUpdateRequest):
                 audit_records = []
                 if old_weekly_sales != request.weekly_sales:
                     audit_records.append((
-                        request.tenant_id, request.store, request.week_ending_date, 45, 'U', request.user,
+                        str(request.tenant_id), request.store, request.week_ending_date, 45, 'U', request.user,
                         f"Employee RX Sales Changed From: {old_weekly_sales} To: {request.weekly_sales}"
                     ))
                 
                 if old_weekly_customer_count != request.weekly_customer_count:
                     audit_records.append((
-                        request.tenant_id, request.store, request.week_ending_date, 45, 'U', request.user,
+                        str(request.tenant_id), request.store, request.week_ending_date, 45, 'U', request.user,
                         f"Employee RX Customer Count Changed From: {old_weekly_customer_count} To: {request.weekly_customer_count}"
                     ))
 
