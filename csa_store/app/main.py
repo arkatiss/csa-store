@@ -88,6 +88,7 @@ from app.api.week_to_date.form97_tax_refunds.wtd_taxes_refunds_select import rou
 from app.api.week_to_date.form97_tax_voids.wtd_taxes_voids_select import router as wtd_taxes_voids_select_router
 
 from app.api.week_to_date.pos_entry_form.form_pos_select import router as form_pos_select_router
+from app.api.week_to_date.pos_entry_form.form_pos_init import router as form_pos_init_router
 
 from app.api.week_to_date.department_transfers.department_transfers_select import router as department_transfers_select
 from app.api.week_to_date.department_transfers.dt_departments_select import router as dt_departments_select_router
@@ -222,6 +223,7 @@ app.include_router(wtd_taxes_refunds_select_router)
 app.include_router(wtd_taxes_voids_select_router)
 
 app.include_router(form_pos_select_router)
+app.include_router(form_pos_init_router)
 
 app.include_router(department_transfers_select)
 app.include_router(dt_departments_select_router)
