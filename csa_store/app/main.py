@@ -79,6 +79,7 @@ from app.api.daily.daily_taxes_input_ind_only.daily_taxes_manual_select import r
 from app.api.daily.daily_taxes_input_ind_only.daily_taxes_manual_update import router as daily_taxes_manual_update_router
 
 from app.api.week_to_date.form97_wtd_net_receipts.wtd_net_receipts_update import router as wtd_net_receipts_update_router
+from app.api.week_to_date.form97_wtd_net_receipts.wtd_net_receipts_select import router as wtd_net_receipts_select_router
 
 from app.api.week_to_date.department_transfers.department_transfers_select import router as department_transfers_select
 from app.api.week_to_date.department_transfers.department_transfers_retrievebyid import router as department_transfers_retrievebyid
@@ -202,6 +203,7 @@ app.include_router(departments_select_router)
 app.include_router(daily_taxes_manual_select_router)
 app.include_router(daily_taxes_manual_update_router)
 
+app.include_router(wtd_net_receipts_select_router)
 app.include_router(wtd_net_receipts_update_router)
 
 app.include_router(department_transfers_select)
