@@ -8,7 +8,7 @@ from app.schemas.week_to_date.form97_net_sales.wtd_net_sales_update_schema impor
     WTDNetSalesUpdateResponse,
 )
 
-from app.utils.week_to_date.form97_net_sales_helper import (
+from app.utils.week_to_date.form97_wtd_net_sales_update_helper import (
     check_wtd_net_sales_exists,
     update_daily_sales_cash_total,
     insert_audit_record,
@@ -71,7 +71,6 @@ def csa_wtd_net_sales_update(request: WTDNetSalesUpdateRequest):
 
                 if not check_wtd_net_sales_exists(
                     cur,
-                    request.tenant_id,
                     request.wns_store,
                     request.wns_week_ending_date,
                 ):
@@ -92,14 +91,11 @@ def csa_wtd_net_sales_update(request: WTDNetSalesUpdateRequest):
                         wns_other_sales_description
                     FROM retail_accounting.wtd_net_sales
                     WHERE
-                        tenant_id=%s
-                    AND
                         wns_store=%s
                     AND
                         wns_week_ending_date=%s
                     """,
                     (
-                        str(request.tenant_id),
                         request.wns_store,
                         request.wns_week_ending_date,
                     ),
@@ -141,8 +137,6 @@ def csa_wtd_net_sales_update(request: WTDNetSalesUpdateRequest):
                             updated_at=NOW(),
                             updated_by=%s
                         WHERE
-                            tenant_id=%s
-                        AND
                             wns_store=%s
                         AND
                             wns_week_ending_date=%s
@@ -152,7 +146,6 @@ def csa_wtd_net_sales_update(request: WTDNetSalesUpdateRequest):
                             request.wns_other_sales,
                             request.wns_other_sales_description,
                             request.user,
-                            str(request.tenant_id),
                             request.wns_store,
                             request.wns_week_ending_date,
                         ),
@@ -161,7 +154,6 @@ def csa_wtd_net_sales_update(request: WTDNetSalesUpdateRequest):
                     # Update Daily Sales Cash Total
                     update_daily_sales_cash_total(
                         cur,
-                        request.tenant_id,
                         request.wns_store,
                         request.wns_week_ending_date,
                     )

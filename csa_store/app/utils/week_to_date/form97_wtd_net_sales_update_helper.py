@@ -6,7 +6,6 @@ logger = logging.getLogger(__name__)
 
 def check_wtd_net_sales_exists(
     cur,
-    tenant_id,
     store,
     week_ending_date
 ):
@@ -19,14 +18,11 @@ def check_wtd_net_sales_exists(
         SELECT COUNT(*)
         FROM retail_accounting.wtd_net_sales
         WHERE
-            tenant_id = %s
-        AND
             wns_store = %s
         AND
             wns_week_ending_date = %s
         """,
         (
-            str(tenant_id),
             store,
             week_ending_date,
         ),
@@ -37,7 +33,6 @@ def check_wtd_net_sales_exists(
 
 def update_daily_sales_cash_total(
     cur,
-    tenant_id,
     store,
     week_ending_date
 ):
@@ -75,20 +70,15 @@ def update_daily_sales_cash_total(
             )
         FROM retail_accounting.wtd_net_sales wns
         WHERE
-            dsct.tenant_id = wns.tenant_id
-        AND
             dsct.dsct_store = wns.wns_store
         AND
             dsct.dsct_week_ending_date = wns.wns_week_ending_date
-        AND
-            dsct.tenant_id = %s
         AND
             dsct.dsct_store = %s
         AND
             dsct.dsct_week_ending_date = %s
         """,
         (
-            str(tenant_id),
             store,
             week_ending_date,
         ),
