@@ -84,9 +84,9 @@ from app.api.week_to_date.form97_wtd_net_receipts.wtd_net_receipts_select import
 from app.api.week_to_date.form97_net_sales.wtd_net_sales_select import router as wtd_net_sales_select_router
 from app.api.week_to_date.form97_net_sales.wtd_net_sales_update import router as wtd_net_sales_update_router
 
-# from app.api.week_to_date.form97_wtd_nondepositable_items.wtd_nondepositableitems_update import (router as wtd_nondepositableitems_update_router)
-#
-# from app.api.week_to_date.gross_profit_inventory.wtd_gross_profit_inventory_update import (router as wtd_gross_profit_inventory_update_router)
+from app.api.week_to_date.form97_wtd_other_nondepositable_items.wtd_nondepositableitems_update import router as wtd_nondepositableitems_update_router
+
+from app.api.week_to_date.gross_profit_and_inventory.wtd_gross_profit_inventory_update import router as wtd_gross_profit_inventory_update_router
 
 from app.api.week_to_date.form97_tax_credits.wtd_taxes_credits_select import router as wtd_taxes_credits_select_router
 from app.api.week_to_date.form97_tax_refunds.wtd_taxes_refunds_select import router as wtd_taxes_refunds_select_router
@@ -224,9 +224,9 @@ app.include_router(wtd_net_receipts_update_router)
 app.include_router(wtd_net_sales_select_router)
 app.include_router(wtd_net_sales_update_router)
 
-# app.include_router(wtd_nondepositableitems_update_router)
-#
-# app.include_router(wtd_gross_profit_inventory_update_router)
+app.include_router(wtd_nondepositableitems_update_router)
+
+app.include_router(wtd_gross_profit_inventory_update_router)
 
 app.include_router(wtd_taxes_credits_select_router)
 app.include_router(wtd_taxes_refunds_select_router)
