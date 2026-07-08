@@ -6,7 +6,7 @@ from app.schemas.week_to_date.gross_profit_and_inventory.wtd_gross_profit_invent
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/week_to_date/gross_profit_and_inventory",
+    prefix="/week_to_date/wtd_gross_profit_inventory",
     tags=["Week To Date Gross Profit And Inventory"]
 )
 
