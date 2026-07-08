@@ -6,7 +6,7 @@ from app.schemas.week_to_date.form97_nondepositable_items.wtd_nondepositable_ite
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/week_to_date/form97_wtd_other_nondepositable_items",
+    prefix="/week_to_date/wtd_non_depositable_items",
     tags=["Week To Date Other Non Depositable Items"]
 )
 
