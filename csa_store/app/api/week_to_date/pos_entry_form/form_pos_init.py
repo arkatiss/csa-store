@@ -10,6 +10,33 @@ router = APIRouter(
     tags=["Week To Date POS Entry Form"]
 )
 
+
+
+def get_pos_insert_columns(cursor):
+    """
+    Returns all POS columns that need to be initialized to zero.
+    Excludes the columns supplied separately or with defaults.
+    """
+    cursor.execute("""
+        SELECT column_name
+        FROM information_schema.columns
+        WHERE table_schema = 'retail_history'
+          AND table_name = 'pos'
+          AND column_name NOT IN (
+                'tenant_id',
+                'pos_store',
+                'pos_file_date',
+                'pos_process_flag',
+                'created_by',
+                'creation_date',
+                'last_updated_by',
+                'last_update_date'
+          )
+        ORDER BY ordinal_position
+    """)
+
+    return [row[0] for row in cursor.fetchall()]
+
 @router.post("/form_pos_init", response_model=FormPOSInitResponse)
 def csa_form_pos_init(request: FormPOSInitRequest):
     """
@@ -43,9 +70,9 @@ def csa_form_pos_init(request: FormPOSInitRequest):
                     # Update audit
                     cur.execute("""
                         INSERT INTO retail_history.audit
-                        (audit_store, audit_date, audit_form_type, audit_update_flag, audit_timestamp, audit_user, audit_description)
-                        VALUES (%s, %s, 21, 'U', CURRENT_TIMESTAMP, %s, 'POS Figures changed by user')
-                    """, (request.pos_store, request.pos_file_date, request.user))
+                        (tenant_id, a_store, a_date, a_form_type, a_action, a_creation_date, a_user, a_comment)
+                        VALUES (%s, %s, %s, 21, 'U', CURRENT_TIMESTAMP, %s, 'POS Figures changed by user')
+                    """, (str(request.tenant_id), request.pos_store, request.pos_file_date, request.user))
 
                     # Check POS original
                     cur.execute("""
@@ -66,111 +93,27 @@ def csa_form_pos_init(request: FormPOSInitRequest):
                     # Insert audit
                     cur.execute("""
                         INSERT INTO retail_history.audit
-                        (audit_store, audit_date, audit_form_type, audit_update_flag, audit_timestamp, audit_user, audit_description)
-                        VALUES (%s, %s, 21, 'I', CURRENT_TIMESTAMP, %s, 'POS Figures manually entered by user')
-                    """, (request.pos_store, request.pos_file_date, request.user))
+                        (tenant_id, a_store, a_date, a_form_type, a_action, a_creation_date, a_user, a_comment)
+                        VALUES (%s, %s, %s, 21, 'I', CURRENT_TIMESTAMP, %s, 'POS Figures manually entered by user')
+                    """, (str(request.tenant_id), request.pos_store, request.pos_file_date, request.user))
 
                     # 135 zero values after tenant_id, store, date, flag
-                    zeros = [0] * 135
+                    zeros = [0] * 147
+                    columns = get_pos_insert_columns(cur)
+                    zeros = [0] * len(columns)
                     # Insert into pos
                     cur.execute(f"""
                         INSERT INTO retail_history.pos
-                        (tenant_id, pos_store, pos_file_date, pos_process_flag,
-                         pos_current_reading, pos_previous_reading_prior_day, pos_previous_reading_prior_week,
-                         pos_wtd_net_sales_rate_1, pos_wtd_net_sales_rate_2, pos_wtd_net_sales_rate_3, pos_wtd_net_sales_rate_4,
-                         pos_wtd_voids_rate_1, pos_wtd_voids_rate_2, pos_wtd_voids_rate_3, pos_wtd_voids_rate_4,
-                         pos_wtd_nt_refunds_rate_1, pos_wtd_nt_refunds_rate_2, pos_wtd_nt_refunds_rate_3, pos_wtd_nt_refunds_rate_4,
-                         pos_wtd_refunds_rate_1, pos_wtd_refunds_rate_2, pos_wtd_refunds_rate_3, pos_wtd_refunds_rate_4,
-                         pos_wtd_credits_rate_1, pos_wtd_credits_rate_2, pos_wtd_credits_rate_3, pos_wtd_credits_rate_4,
-                         pos_wtd_bottle_deposits, pos_wtd_bottle_refunds, pos_wtd_store_coupons,
-                         pos_wtd_grocery_sales, pos_wtd_grocery_voids_refunds, pos_wtd_meat_sales, pos_wtd_meat_voids_refunds,
-                         pos_wtd_produce_sales, pos_wtd_produce_voids_refunds, pos_wtd_deli_bakery_sales, pos_wtd_deli_bakery_voids_refunds,
-                         pos_wtd_florist_sales, pos_wtd_florist_voids_refunds, pos_wtd_seafood_sales, pos_wtd_seafood_voids_refunds,
-                         pos_wtd_pharmacy_sales, pos_wtd_pharmacy_voids_refunds, pos_wtd_ff_dairy_sales, pos_wtd_ff_dairy_voids_refunds,
-                         pos_wtd_hba_sales, pos_wtd_hba_voids_refunds, pos_wtd_sales_tax_collected_rate_1, pos_wtd_sales_tax_collected_rate_2,
-                         pos_wtd_sales_tax_collected_rate_3, pos_wtd_sales_tax_collected_rate_4, pos_wtd_total_customer_count,
-                         pos_wtd_grocery_customer_count, pos_wtd_meat_customer_count, pos_wtd_produce_customer_count,
-                         pos_wtd_deli_customer_count, pos_wtd_florist_customer_count, pos_wtd_seafood_customer_count,
-                         pos_wtd_pharmacy_customer_count, pos_wtd_ff_dairy_customer_count, pos_wtd_hba_customer_count, pos_wtd_item_count,
-                         pos_wtd_nt_sales_rate_1, pos_wtd_nt_sales_rate_2, pos_wtd_nt_sales_rate_3, pos_wtd_nt_sales_rate_4,
-                         pos_daily_net_sales_rate_1, pos_daily_net_sales_rate_2, pos_daily_net_sales_rate_3, pos_daily_net_sales_rate_4,
-                         pos_daily_voids_rate_1, pos_daily_voids_rate_2, pos_daily_voids_rate_3, pos_daily_voids_rate_4,
-                         pos_daily_nt_refunds_rate_1, pos_daily_nt_refunds_rate_2, pos_daily_nt_refunds_rate_3, pos_daily_nt_refunds_rate_4,
-                         pos_daily_refunds_rate_1, pos_daily_refunds_rate_2, pos_daily_refunds_rate_3, pos_daily_refunds_rate_4,
-                         pos_daily_credits_rate_1, pos_daily_credits_rate_2, pos_daily_credits_rate_3, pos_daily_credits_rate_4,
-                         pos_daily_bottle_deposits, pos_daily_bottle_returns, pos_daily_store_coupons,
-                         pos_daily_grocery_sales, pos_daily_grocery_voids_refunds, pos_daily_meat_sales, pos_daily_meat_voids_refunds,
-                         pos_daily_produce_sales, pos_daily_produce_voids_refunds, pos_daily_deli_bakery_sales, pos_daily_deli_bakery_voids_refunds,
-                         pos_daily_florist_sales, pos_daily_florist_voids_refunds, pos_daily_seafood_sales, pos_daily_seafood_voids_refunds,
-                         pos_daily_pharmacy_sales, pos_daily_pharmacy_voids_refunds, pos_daily_ff_dairy_sales, pos_daily_ff_dairy_voids_refunds,
-                         pos_daily_hba_sales, pos_daily_hba_voids_refunds, pos_daily_sales_tax_collected_rate_1, pos_daily_sales_tax_collected_rate_2,
-                         pos_daily_sales_tax_collected_rate_3, pos_daily_sales_tax_collected_rate_4, pos_daily_total_customer_count,
-                         pos_daily_grocery_customer_count, pos_daily_meat_customer_count, pos_daily_produce_customer_count,
-                         pos_daily_deli_customer_count, pos_daily_florist_customer_count, pos_daily_seafood_customer_count,
-                         pos_daily_pharmacy_customer_count, pos_daily_ff_dairy_customer_count, pos_daily_hba_customer_count, pos_daily_item_count,
-                         pos_wtd_sushi_sales, pos_wtd_sushi_voids_refunds, pos_wtd_sushi_customer_count,
-                         pos_wtd_fuel_sales, pos_wtd_fuel_voids_refunds, pos_wtd_fuel_customer_count,
-                         pos_wtd_starbucks_sales, pos_wtd_starbucks_voids_refunds, pos_wtd_starbucks_customer_count,
-                         pos_wtd_kitchen_ware_sales, pos_wtd_kitchen_ware_voids_refunds, pos_wtd_kitchen_ware_customer_count,
-                         pos_wtd_dream_dinners_sales, pos_wtd_dream_dinners_voids_refunds, pos_wtd_dream_dinners_customer_count,
-                         pos_daily_sushi_sales, pos_daily_sushi_voids_refunds, pos_daily_sushi_customer_count,
-                         pos_daily_fuel_sales, pos_daily_fuel_voids_refunds, pos_daily_fuel_customer_count,
-                         pos_daily_starbucks_sales, pos_daily_starbucks_voids_refunds, pos_daily_starbucks_customer_count,
-                         pos_daily_kitchen_ware_sales, pos_daily_kitchen_ware_voids_refunds, pos_daily_kitchen_ware_customer_count,
-                         pos_daily_dream_dinners_sales, pos_daily_dream_dinners_voids_refunds, pos_daily_dream_dinners_customer_count,
-                         pos_wtd_void_transaction, pos_daily_void_transaction)
-                        VALUES (%s, %s, %s, '1', {','.join(['%s']*135)})
-                    """, (request.tenant_id, request.pos_store, request.pos_file_date, *zeros))
+                        (tenant_id, pos_store, pos_file_date, pos_process_flag, {",".join(columns)})
+                        VALUES (%s, %s, %s, '1', {",".join(["%s"] * len(columns))})
+                    """, (str(request.tenant_id), request.pos_store, request.pos_file_date, *zeros))
 
                     # Insert into pos_original
                     cur.execute(f"""
                         INSERT INTO retail_history.pos_original
-                        (tenant_id, pos_store, pos_file_date, pos_process_flag,
-                         pos_current_reading, pos_previous_reading_prior_day, pos_previous_reading_prior_week,
-                         pos_wtd_net_sales_rate_1, pos_wtd_net_sales_rate_2, pos_wtd_net_sales_rate_3, pos_wtd_net_sales_rate_4,
-                         pos_wtd_voids_rate_1, pos_wtd_voids_rate_2, pos_wtd_voids_rate_3, pos_wtd_voids_rate_4,
-                         pos_wtd_nt_refunds_rate_1, pos_wtd_nt_refunds_rate_2, pos_wtd_nt_refunds_rate_3, pos_wtd_nt_refunds_rate_4,
-                         pos_wtd_refunds_rate_1, pos_wtd_refunds_rate_2, pos_wtd_refunds_rate_3, pos_wtd_refunds_rate_4,
-                         pos_wtd_credits_rate_1, pos_wtd_credits_rate_2, pos_wtd_credits_rate_3, pos_wtd_credits_rate_4,
-                         pos_wtd_bottle_deposits, pos_wtd_bottle_refunds, pos_wtd_store_coupons,
-                         pos_wtd_grocery_sales, pos_wtd_grocery_voids_refunds, pos_wtd_meat_sales, pos_wtd_meat_voids_refunds,
-                         pos_wtd_produce_sales, pos_wtd_produce_voids_refunds, pos_wtd_deli_bakery_sales, pos_wtd_deli_bakery_voids_refunds,
-                         pos_wtd_florist_sales, pos_wtd_florist_voids_refunds, pos_wtd_seafood_sales, pos_wtd_seafood_voids_refunds,
-                         pos_wtd_pharmacy_sales, pos_wtd_pharmacy_voids_refunds, pos_wtd_ff_dairy_sales, pos_wtd_ff_dairy_voids_refunds,
-                         pos_wtd_hba_sales, pos_wtd_hba_voids_refunds, pos_wtd_sales_tax_collected_rate_1, pos_wtd_sales_tax_collected_rate_2,
-                         pos_wtd_sales_tax_collected_rate_3, pos_wtd_sales_tax_collected_rate_4, pos_wtd_total_customer_count,
-                         pos_wtd_grocery_customer_count, pos_wtd_meat_customer_count, pos_wtd_produce_customer_count,
-                         pos_wtd_deli_customer_count, pos_wtd_florist_customer_count, pos_wtd_seafood_customer_count,
-                         pos_wtd_pharmacy_customer_count, pos_wtd_ff_dairy_customer_count, pos_wtd_hba_customer_count, pos_wtd_item_count,
-                         pos_wtd_nt_sales_rate_1, pos_wtd_nt_sales_rate_2, pos_wtd_nt_sales_rate_3, pos_wtd_nt_sales_rate_4,
-                         pos_daily_net_sales_rate_1, pos_daily_net_sales_rate_2, pos_daily_net_sales_rate_3, pos_daily_net_sales_rate_4,
-                         pos_daily_voids_rate_1, pos_daily_voids_rate_2, pos_daily_voids_rate_3, pos_daily_voids_rate_4,
-                         pos_daily_nt_refunds_rate_1, pos_daily_nt_refunds_rate_2, pos_daily_nt_refunds_rate_3, pos_daily_nt_refunds_rate_4,
-                         pos_daily_refunds_rate_1, pos_daily_refunds_rate_2, pos_daily_refunds_rate_3, pos_daily_refunds_rate_4,
-                         pos_daily_credits_rate_1, pos_daily_credits_rate_2, pos_daily_credits_rate_3, pos_daily_credits_rate_4,
-                         pos_daily_bottle_deposits, pos_daily_bottle_returns, pos_daily_store_coupons,
-                         pos_daily_grocery_sales, pos_daily_grocery_voids_refunds, pos_daily_meat_sales, pos_daily_meat_voids_refunds,
-                         pos_daily_produce_sales, pos_daily_produce_voids_refunds, pos_daily_deli_bakery_sales, pos_daily_deli_bakery_voids_refunds,
-                         pos_daily_florist_sales, pos_daily_florist_voids_refunds, pos_daily_seafood_sales, pos_daily_seafood_voids_refunds,
-                         pos_daily_pharmacy_sales, pos_daily_pharmacy_voids_refunds, pos_daily_ff_dairy_sales, pos_daily_ff_dairy_voids_refunds,
-                         pos_daily_hba_sales, pos_daily_hba_voids_refunds, pos_daily_sales_tax_collected_rate_1, pos_daily_sales_tax_collected_rate_2,
-                         pos_daily_sales_tax_collected_rate_3, pos_daily_sales_tax_collected_rate_4, pos_daily_total_customer_count,
-                         pos_daily_grocery_customer_count, pos_daily_meat_customer_count, pos_daily_produce_customer_count,
-                         pos_daily_deli_customer_count, pos_daily_florist_customer_count, pos_daily_seafood_customer_count,
-                         pos_daily_pharmacy_customer_count, pos_daily_ff_dairy_customer_count, pos_daily_hba_customer_count, pos_daily_item_count,
-                         pos_wtd_sushi_sales, pos_wtd_sushi_voids_refunds, pos_wtd_sushi_customer_count,
-                         pos_wtd_fuel_sales, pos_wtd_fuel_voids_refunds, pos_wtd_fuel_customer_count,
-                         pos_wtd_starbucks_sales, pos_wtd_starbucks_voids_refunds, pos_wtd_starbucks_customer_count,
-                         pos_wtd_kitchen_ware_sales, pos_wtd_kitchen_ware_voids_refunds, pos_wtd_kitchen_ware_customer_count,
-                         pos_wtd_dream_dinners_sales, pos_wtd_dream_dinners_voids_refunds, pos_wtd_dream_dinners_customer_count,
-                         pos_daily_sushi_sales, pos_daily_sushi_voids_refunds, pos_daily_sushi_customer_count,
-                         pos_daily_fuel_sales, pos_daily_fuel_voids_refunds, pos_daily_fuel_customer_count,
-                         pos_daily_starbucks_sales, pos_daily_starbucks_voids_refunds, pos_daily_starbucks_customer_count,
-                         pos_daily_kitchen_ware_sales, pos_daily_kitchen_ware_voids_refunds, pos_daily_kitchen_ware_customer_count,
-                         pos_daily_dream_dinners_sales, pos_daily_dream_dinners_voids_refunds, pos_daily_dream_dinners_customer_count,
-                         pos_wtd_void_transaction, pos_daily_void_transaction)
-                        VALUES (%s, %s, %s, '1', {','.join(['%s']*135)})
-                    """, (request.tenant_id, request.pos_store, request.pos_file_date, *zeros))
+                        (tenant_id, pos_store, pos_file_date, pos_process_flag, {",".join(columns)})
+                        VALUES (%s, %s, %s, '1', {",".join(["%s"] * len(columns))})
+                    """, (str(request.tenant_id), request.pos_store, request.pos_file_date, *zeros))
 
             conn.commit()
 
