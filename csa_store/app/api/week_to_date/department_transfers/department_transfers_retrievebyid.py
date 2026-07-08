@@ -35,9 +35,9 @@ def execute_csa_department_transfers_retrieve_by_id(ddt_id: int) -> Dict[str, An
         "ddt_to_store": None,
         "ddt_date": None,
         "ddt_from_department": None,
-        "d_from_description_desc": None,
+        "d_from_department_desc": None,
         "ddt_to_department": None,
-        "d_to_description_desc": None,
+        "d_to_department_desc": None,
         "ddt_item_quantity": None,
         "ddt_item_description": None,
         "ddt_user": None,
@@ -81,7 +81,7 @@ def execute_csa_department_transfers_retrieve_by_id(ddt_id: int) -> Dict[str, An
                         ddt_to_store,
                         ddt_date,
                         ddt_from_department,
-                        D1.d_description AS d_from_description_desc,
+                        D1.d_description AS d_from_department_desc,
                         ddt_to_department,
                         D2.d_description AS d_do_description_desc,
                         ddt_item_quantity,
@@ -105,9 +105,9 @@ def execute_csa_department_transfers_retrieve_by_id(ddt_id: int) -> Dict[str, An
                     result["ddt_to_store"] = row[1]
                     result["ddt_date"] = row[2]
                     result["ddt_from_department"] = row[3]
-                    result["d_from_description_desc"] = row[4]
+                    result["d_from_department_desc"] = row[4]
                     result["ddt_to_department"] = row[5]
-                    result["d_to_description_desc"] = row[6]
+                    result["d_to_department_desc"] = row[6]
                     result["ddt_item_quantity"] = row[7]
                     result["ddt_item_description"] = row[8]
                     result["ddt_user"] = row[9]
