@@ -89,6 +89,7 @@ from app.api.week_to_date.form97_wtd_other_nondepositable_items.wtd_nondepositab
 
 from app.api.week_to_date.gross_profit_and_inventory.wtd_gross_profit_inventory_update import router as wtd_gross_profit_inventory_update_router
 from app.api.week_to_date.gross_profit_and_inventory.wtd_gross_profit_inventory_select import router as wtd_gross_profit_inventory_select_router
+from app.api.week_to_date.gross_profit_and_inventory.wtd_gross_profit_inventory_retrievebyid import router as wtd_gross_profit_inventory_retrievebyid_router
 
 from app.api.week_to_date.form97_tax_credits.wtd_taxes_credits_select import router as wtd_taxes_credits_select_router
 from app.api.week_to_date.form97_tax_refunds.wtd_taxes_refunds_select import router as wtd_taxes_refunds_select_router
@@ -231,6 +232,7 @@ app.include_router(wtd_nondepositable_items_select_router)
 
 app.include_router(wtd_gross_profit_inventory_update_router)
 app.include_router(wtd_gross_profit_inventory_select_router)
+app.include_router(wtd_gross_profit_inventory_retrievebyid_router)
 
 app.include_router(wtd_taxes_credits_select_router)
 app.include_router(wtd_taxes_refunds_select_router)
