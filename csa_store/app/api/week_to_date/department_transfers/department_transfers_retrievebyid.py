@@ -31,25 +31,25 @@ def execute_csa_department_transfers_retrieve_by_id(ddt_id: int) -> Dict[str, An
 
     # Initialize default response structure matching the procedure's output parameters
     result = {
-        "DDT_Store": None,
-        "DDT_To_Store": None,
-        "DDT_Date": None,
-        "DDT_From_Department": None,
-        "D_From_Description": None,
-        "DDT_To_Department": None,
-        "D_To_Description": None,
-        "DDT_Item_Quantity": None,
-        "DDT_Item_Description": None,
-        "DDT_User": None,
-        "DDT_Retail_Amount": None,
-        "DDT_Cost_Amount": None,
+        "ddt_store": None,
+        "ddt_to_store": None,
+        "ddt_date": None,
+        "ddt_from_department": None,
+        "d_from_description": None,
+        "ddt_to_department": None,
+        "d_to_description": None,
+        "ddt_item_quantity": None,
+        "ddt_item_description": None,
+        "ddt_user": None,
+        "ddt_retail_amount": None,
+        "ddt_cost_amount": None,
         "Return_Value": 0,
         "Error_Message": None
     }
 
     # Logic: If @DDT_ID is null or @DDT_ID = ''
     if ddt_id is None or str(ddt_id).strip() == '':
-        logger.warning("Validation failed: DDT_ID is null or empty.")
+        logger.warning("Validation failed: ddt_id is null or empty.")
         result["Return_Value"] = 1
         result["Error_Message"] = "Invalid ID"
         return result
@@ -62,7 +62,7 @@ def execute_csa_department_transfers_retrieve_by_id(ddt_id: int) -> Dict[str, An
                 count_query = """
                     SELECT count(*) 
                     FROM retail_accounting.daily_department_transfers 
-                    WHERE DDT_ID = %s
+                    WHERE ddt_id = %s
                 """
                 cursor.execute(count_query, (ddt_id,))
                 count = cursor.fetchone()[0]
@@ -77,41 +77,42 @@ def execute_csa_department_transfers_retrieve_by_id(ddt_id: int) -> Dict[str, An
                 # Logic: Main Select statement with Inner Joins
                 main_query = """
                     SELECT	
-                        DDT_Store,
-                        DDT_To_Store,
-                        DDT_Date,
-                        DDT_From_Department,
-                        D1.D_Description AS D_From_Description,
-                        DDT_To_Department,
-                        D2.D_Description AS D_To_Description,
-                        DDT_Item_Quantity,
-                        DDT_Item_Description,
-                        DDT_User,
-                        DDT_Retail_Amount,
-                        DDT_Cost_Amount
+                        ddt_store,
+                        ddt_to_store,
+                        ddt_date,
+                        ddt_from_department,
+                        D1.d_description AS d_from_description,
+                        ddt_to_department,
+                        D2.d_description AS d_do_description,
+                        ddt_item_quantity,
+                        ddt_item_description,
+                        ddt_user,
+                        ddt_retail_amount,
+                        ddt_cost_amount
                     FROM retail_accounting.daily_department_transfers
                     INNER JOIN retail_accounting.departments D1
-                        ON DDT_From_Department = D1.D_ID
+                        ON ddt_from_department = D1.d_id
                     INNER JOIN retail_accounting.departments D2
-                        ON DDT_To_Department = D2.D_ID
-                    WHERE DDT_ID = %s
+                        ON ddt_to_department = D2.d_id
+                    WHERE ddt_id = %s
                 """
                 cursor.execute(main_query, (ddt_id,))
                 row = cursor.fetchone()
 
                 if row:
-                    result["DDT_Store"] = row[0]
-                    result["DDT_To_Store"] = row[1]
-                    result["DDT_Date"] = row[2]
-                    result["DDT_From_Department"] = row[3]
-                    result["D_From_Description"] = row[4]
-                    result["DDT_To_Department"] = row[5]
-                    result["D_To_Description"] = row[6]
-                    result["DDT_Item_Quantity"] = row[7]
-                    result["DDT_Item_Description"] = row[8]
-                    result["DDT_User"] = row[9]
-                    result["DDT_Retail_Amount"] = row[10]
-                    result["DDT_Cost_Amount"] = row[11]
+                    result["ddt_id"] = ddt_id
+                    result["ddt_store"] = row[0]
+                    result["ddt_to_store"] = row[1]
+                    result["ddt_date"] = row[2]
+                    result["ddt_from_department"] = row[3]
+                    result["d_from_description"] = row[4]
+                    result["ddt_to_department"] = row[5]
+                    result["d_to_description"] = row[6]
+                    result["ddt_item_quantity"] = row[7]
+                    result["ddt_item_description"] = row[8]
+                    result["ddt_user"] = row[9]
+                    result["ddt_retail_amount"] = row[10]
+                    result["ddt_cost_amount"] = row[11]
                     result["Return_Value"] = 0
                     logger.info(f"Successfully retrieved record for DDT_ID: {ddt_id}")
                 else:
