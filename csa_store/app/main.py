@@ -112,6 +112,7 @@ from app.api.week_to_date.employee_pharmacy_update.employee_rx_sales_update impo
 
 from app.api.reports.daily.form98_retrieve_by_day import router as reports_daily_form98_retrieve_by_day_router
 from app.api.reports.daily.form97_page12_select import router as reports_daily_form97_page12_select_router
+from app.api.reports.weekly.form98_select import router as reports_weekly_form98_select_router
 
 
 app = FastAPI(title="CSA Store API")
@@ -254,3 +255,4 @@ app.include_router(employee_rx_sales_update_router)
 
 app.include_router(reports_daily_form98_retrieve_by_day_router)
 app.include_router(reports_daily_form97_page12_select_router)
+app.include_router(reports_weekly_form98_select_router)
