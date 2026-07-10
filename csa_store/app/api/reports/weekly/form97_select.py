@@ -38,7 +38,7 @@ def csa_form97_select(request: Form97SelectRequest):
                     SELECT 
                         f97f_line_number,
                         f97f_col1_description,
-                        f97f_col1_amount,
+                        f97f_col1_amount::numeric(19,2),
                         f97f_col1_amount_type,
                         f97f_col2_description,
                         f97f_col2_amount,
