@@ -116,6 +116,7 @@ from app.api.reports.weekly.form98_select import router as reports_weekly_form98
 from app.api.reports.weekly.form98_totals_by_day import router as reports_weekly_form98_totals_by_day_router
 from app.api.reports.weekly.form97_select import router as reports_weekly_form97_select_router
 from app.api.reports.weekly.dept_sales_select import router as reports_weekly_dept_sales_select_router
+from app.api.reports.weekly.dept_transfers_summary import router as reports_weekly_dept_transfers_summary_router
 
 app = FastAPI(title="CSA Store API")
 
@@ -261,3 +262,4 @@ app.include_router(reports_weekly_form98_select_router)
 app.include_router(reports_weekly_form98_totals_by_day_router)
 app.include_router(reports_weekly_form97_select_router)
 app.include_router(reports_weekly_dept_sales_select_router)
+app.include_router(reports_weekly_dept_transfers_summary_router)

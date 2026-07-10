@@ -332,3 +332,6 @@ def csa_dept_sales_select(request: DeptSalesSelectRequest):
     except Exception as ex:
         logger.exception("Error in DeptSales_Select")
         return DeptSalesSelectResponse(return_value=1, error_message="Select Failed", data=None)
+
+
+
